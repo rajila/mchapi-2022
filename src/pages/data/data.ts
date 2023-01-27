@@ -12,11 +12,11 @@ class DataList {
       }
 
       getData(id: number): IKey {
-            return this._ldata.filter(el => el.id === id)[0]
+            return this._ldata.filter(el => el.id === BigInt(id))[0]
       }
 
       getIndexData(id: number): number {
-            return this._ldata.findIndex(el => el.id === id)
+            return this._ldata.findIndex(el => el.id === BigInt(id))
       }
 
       updateData(data: IKey, id: number) : IKey {
