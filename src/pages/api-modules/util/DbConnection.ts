@@ -1,7 +1,8 @@
 import { Client, QueryConfig, types } from 'pg';
-import UtilInstance from '../util/Util';
+import UtilInstance from './Util';
+import { IModel } from './IModel';
 
-class DbConnection<T> {
+class DbConnection {
       // private _connectionString = 'postgres://postgres:hjWf32SZi2ihTPi@mchapp-2022-db.fly.dev:5432/mchdb'
       private _connectionString = 'postgres://atic:atic@localhost:5432/mchdb'
       private _connection: Client
@@ -17,8 +18,8 @@ class DbConnection<T> {
             })
       }
 
-      async exeQuery(query: QueryConfig): Promise<Array<T>> {
-            let data: Array<T> = []
+      async exeQuery(query: QueryConfig): Promise<Array<IModel>> {
+            let data: Array<IModel> = []
             await (
                   this._connection
                   .connect()

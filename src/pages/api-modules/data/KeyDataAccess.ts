@@ -1,10 +1,11 @@
-import DbConnection from "./DbConnection"
+import DbConnection from "../util/DbConnection"
 import { IDataAccess } from "../util/IDataAccess"
 import { IKey } from "../models/IKey"
 import UtilInstance from "../util/Util"
+import { ILock } from "../models/ILock"
 
 class KeyDataAccess implements IDataAccess<IKey> {
-      public client: DbConnection<IKey>
+      public client: DbConnection
 
       constructor() {
             this.client = new DbConnection()
@@ -20,7 +21,7 @@ class KeyDataAccess implements IDataAccess<IKey> {
                   values: [1, 0]
             }
               
-            let lData: Array<IKey> = await this.client.exeQuery(queryData)
+            let lData: Array<IKey> = (await this.client.exeQuery(queryData)) as Array<IKey>
           
             return lData
       }
@@ -35,7 +36,7 @@ class KeyDataAccess implements IDataAccess<IKey> {
                   values: [id, 1, 0]
             }
 
-            let lData: Array<IKey> = await this.client.exeQuery(queryData)
+            let lData: Array<IKey> = (await this.client.exeQuery(queryData)) as Array<IKey>
 
             return lData[0]
       }
@@ -63,7 +64,7 @@ class KeyDataAccess implements IDataAccess<IKey> {
                         ]
             }
 
-            let lData: Array<IKey> = await this.client.exeQuery(queryData)
+            let lData: Array<IKey> = (await this.client.exeQuery(queryData)) as Array<IKey>
 
             return lData[0]
       }
@@ -96,7 +97,7 @@ class KeyDataAccess implements IDataAccess<IKey> {
                         ]
             }
 
-            let lData: Array<IKey> = await this.client.exeQuery(queryData)
+            let lData: Array<IKey> = (await this.client.exeQuery(queryData)) as Array<IKey>
 
             return lData[0]
       }
@@ -117,9 +118,26 @@ class KeyDataAccess implements IDataAccess<IKey> {
                         ]
             }
 
-            let lData: Array<IKey> = await this.client.exeQuery(queryData)
+            let lData: Array<IKey> = (await this.client.exeQuery(queryData)) as Array<IKey>
 
             return lData[0]
+      }
+
+      async getLockXKey(id: number, status: number): Promise<Array<ILock>> {
+            const queryData  = {
+                  name: 'get-lock-x-key',
+                  text: `SELECT d.id, d.codigo, d.nombre, m.mac, d.ubicacion 
+                         FROM tbl_llave_x_manija llm
+                         JOIN tbl_manija m ON (m.iddispositivo = llm.idmanija)
+                         JOIN tbl_dispositivo d ON (d.id = m.iddispositivo)
+                         WHERE llm.idllave = $1 AND d.estado >= $2 AND d.estado IS NOT NULL 
+                         ORDER BY d.id ASC`,
+                  values: [id, status]
+            }
+              
+            let lData: Array<ILock> = (await this.client.exeQuery(queryData)) as Array<ILock>
+          
+            return lData
       }
 }
 

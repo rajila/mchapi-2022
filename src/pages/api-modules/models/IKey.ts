@@ -1,4 +1,6 @@
-export interface IKey {
+import { IModel } from "../util/IModel"
+
+export interface IKey extends IModel {
       id?: BigInt,
       ubicacion: string,
       tipo_tarjeta: string,

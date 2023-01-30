@@ -1,6 +1,7 @@
 import { IDataAccess } from "../util/IDataAccess"
 import { IKey } from "../models/IKey"
 import KeyDataAccess from "../data/KeyDataAccess"
+import { ILock } from "../models/ILock"
 
 class KeyBusiness implements IDataAccess<IKey> {
       public dataAcces: KeyDataAccess
@@ -31,6 +32,11 @@ class KeyBusiness implements IDataAccess<IKey> {
 
       delete(id: number, idUser: number): Promise<IKey> {
             return this.dataAcces.delete(id, idUser)
+      }
+
+      getLockXKey(id: number): Promise<Array<ILock>> {
+            // Validar el rol para filtar los datos en base al estado
+            return this.dataAcces.getLockXKey(id, 0)
       }
 }
 
