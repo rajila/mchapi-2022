@@ -3,8 +3,8 @@ import UtilInstance from './Util';
 import { IModel } from './IModel';
 
 class DbConnection {
-      private _connectionString = 'postgres://postgres:hjWf32SZi2ihTPi@mchapp-2022-db.fly.dev:5432/mchdb'
-      // private _connectionString = 'postgres://atic:atic@localhost:5432/mchdb'
+      // private _connectionString = 'postgres://postgres:hjWf32SZi2ihTPi@mchapp-2022-db.fly.dev:5432/mchdb'
+      private _connectionString = 'postgres://atic:atic@localhost:5432/mchdb'
       private _connection: Client
       
       constructor() {
