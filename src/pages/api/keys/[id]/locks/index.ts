@@ -18,7 +18,12 @@ const handler = nc(
       //.use(cors())
       .get(async (req, res: NextApiResponse<Array<ILock>>) => {
             let el: KeyBusiness = new KeyBusiness()
-            res.json( await el.getLockXKey(parseInt(req.query.id as string)) )
+            let dataDB: Array<ILock> = await el.getLockXKey(parseInt(req.query.id as string))
+            if ( !dataDB || dataDB.length === 0 ) {
+                  res.status(404).end()
+                  return
+            }
+            res.json( dataDB )
       })
 
 export default handler

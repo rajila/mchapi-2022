@@ -18,7 +18,12 @@ const handler = nc(
       //.use(cors())
       .get(async (req, res: NextApiResponse<Array<IKey>>) => {
             let el: KeyBusiness = new KeyBusiness()
-            res.json(await el.get())
+            let dataDB: Array<IKey> = await el.get()
+            if ( !dataDB || dataDB.length === 0 ) {
+                  res.status(404).end()
+                  return
+            }
+            res.json( dataDB )
       })
       .post(async (req, res: NextApiResponse<IKey>) => {
             let data: IKey = {
