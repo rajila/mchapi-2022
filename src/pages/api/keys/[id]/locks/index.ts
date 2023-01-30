@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import nc from 'next-connect'
-import KeyBusiness from '@/pages/api-modules/business/KeyBusiness'
+import KeyBusiness from '@/pages/api/modules/business/KeyBusiness'
 //import cors from 'cors'
 
-import { ILock } from '@/pages/api-modules/models/ILock'
+import { ILock } from '@/pages/api/modules/models/ILock'
 
 const handler = nc(
       {
